@@ -3,7 +3,7 @@ const Contact = require("../models/contactModel");
 
 
 const getContact = asyncHandler (async (req, res) => {
-    const contacts = await Contact.find();
+    const contacts = await Contact.find({user_id: req.user.id});
     res.status(200).json(contacts);
 });
 
@@ -24,7 +24,7 @@ const createcontact = asyncHandler (async (req, res) => {
         throw new Error("fill all");
     }
     const contact = await Contact.create({
-        name, email, phone
+        name, email, phone,user_id:req.user.id,
     });
     res.status(201).json(contact);
 });
